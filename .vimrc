@@ -15,15 +15,52 @@ set relativenumber
 syntax enable
 inoremap jk <Esc>
 
-set tabstop=2
-set shiftwidth=2
+""""""""""""""""""""""""""""""
+" => YAML
+""""""""""""""""""""""""""""""
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Text, tab and indent related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+" Linebreak on 500 characters
+set lbr
+set tw=500
+
+set ai "Auto indent
+set si "Smart indent
+set wrap "Wrap lines
 set autoread
 set ruler
 set hlsearch
 
+""""""""""""""""""""""""""""""
+" => Status line
+""""""""""""""""""""""""""""""
+" Always show the status line
+set laststatus=2
+
+" Format the status line
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+
 :set shortmess-=S "count search matches
 " Ignore case when searching
 set ignorecase
+
+" Turn backup off, since most stuff is in SVN, git etc. anyway...
+set nobackup
+set nowb
+set noswapfile
 
 " When searching try to be smart about cases
 set smartcase
@@ -35,22 +72,31 @@ set lazyredraw
 
 " For regular expressions turn magic on
 set magic
-set ai "Auto indent
 
-set si "Smart indent
-set wrap "Wrap lines
 set wildmenu
 " Fuzzy search prefix
 set path+=**
 
-"Plugin setup (to decomment)
-"let g:clang_library_path='/usr/lib/llvm-18/lib/libclang.so.1'
 " Pressing ,ss will toggle and untoggle spell checking
-"map <leader>ss :setlocal spell!<cr>
-"call plug#begin()
+map <leader>ss :setlocal spell!<cr>
+
+"Plugin setup 
+let g:clang_library_path='/usr/lib/llvm-18/lib/libclang.so.1'
+call plug#begin()
 
 " List your plugins here
-"Plug 'davidhalter/jedi-vim'
-"Plug 'rip-rip/clang_complete'
-"Plug 'tpope/vim-surround'
-"call plug#end()
+Plug 'davidhalter/jedi-vim'
+Plug 'rip-rip/clang_complete'
+Plug 'tpope/vim-surround'
+call plug#end()
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Helper functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Returns true if paste mode is enabled
+function! HasPaste()
+    if &paste
+        return 'PASTE MODE  '
+    endif
+    return ''
+endfunction
+
