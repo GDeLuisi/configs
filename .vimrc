@@ -1,7 +1,8 @@
 set nocompatible
 set number
-" filetype indent on
-" filetype plugin on
+filetype indent on
+filetype on
+filetype plugin on
 
 " Tweaks for browsing
 let g:netrw_banner=0        " disable annoying banner
@@ -83,6 +84,9 @@ map <leader>ss :setlocal spell!<cr>
 map <leader>sy :syntax on!<cr>
 xnoremap <leader>s xi()<Esc>P
 com! FormatJSON :%!python -m json.tool
+com! SortJSON :%!/bin/bash -c "jq -S '.'"
+com! YamlToJson :%!/bin/bash -c "yq -o json '.'"
+com! JsonToYaml :%!/bin/bash -c "yq -o yaml -P '.'"
 
 "Substitute the selected word 
 nnoremap ** :%s/\<<C-r>=expand("<cword>")<CR>\>/
@@ -107,14 +111,27 @@ nnoremap <C-k> <Esc>:bp!<CR>
 
 "Plugin setup 
 let g:clang_library_path='/usr/lib/llvm-18/lib/libclang.so.1'
-" call plug#begin()
+call plug#begin()
 " 
 " " List your plugins here
 " Plug 'davidhalter/jedi-vim'
 " Plug 'rip-rip/clang_complete'
 " Plug 'tpope/vim-surround'
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-" call plug#end()
+Plug 'dense-analysis/ale'
+call plug#end()
+let g:ale_linters={
+\ 'python': ['pylint','pyright','flake8'],
+\}
+
+" leg g:ale_fixers={'python': ['autoflake','autoimport']}
+let g:ale_fixers = {
+  \   'python': ['autoflake','autoimport','remove_trailing_lines','trim_whitespace','autopep8'],
+  \}
+nmap <F8> <Plug>(ale_fix)
+let g:ale_completion_enabled = 1
+let g:ale_completion_autoimport = 1
+set omnifunc=ale#completion#OmniFunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -125,4 +142,5 @@ function! HasPaste()
     endif
     return ''
 endfunction
+
 

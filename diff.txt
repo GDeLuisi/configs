@@ -1,0 +1,75 @@
+diff --git a/.vimrc b/.vimrc
+index 50efcdc..b8831ef 100644
+--- a/.vimrc
++++ b/.vimrc
+@@ -1,7 +1,7 @@
+ set nocompatible
+ set number
+-filetype indent on
+-filetype plugin on
++" filetype indent on
++" filetype plugin on
+ 
+ " Tweaks for browsing
+ let g:netrw_banner=0        " disable annoying banner
+@@ -14,7 +14,6 @@ let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+ set relativenumber
+ syntax enable
+ inoremap jk <Esc>
+-
+ """"""""""""""""""""""""""""""
+ " => YAML
+ """"""""""""""""""""""""""""""
+@@ -77,18 +76,45 @@ set wildmenu
+ " Fuzzy search prefix
+ set path+=**
+ 
++" => Custom Mapppings Section
++
+ " Pressing ,ss will toggle and untoggle spell checking
+ map <leader>ss :setlocal spell!<cr>
++map <leader>sy :syntax on!<cr>
++xnoremap <leader>s xi()<Esc>P
++com! FormatJSON :%!python -m json.tool
++
++"Substitute the selected word 
++nnoremap ** :%s/\<<C-r>=expand("<cword>")<CR>\>/
++
++"Scrolling page by using shitf-j/k
++nnoremap J <PageDown>
++nnoremap K <PageUp>
++vnoremap J:m '>+1<CR>gv/cv'
++vnoremap K:m '<-2<CR>gv/cv'
++
++"Remove search highlight by using Ctrl-b
++nnoremap <silent> <C-b> <Cmd>nohlsearch<CR><C-b>
++
++"Use Ctrl-r to replace highlighted test
++vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
++
++"Move between tabs using Ctrl-h/j/k/l
++nnoremap <C-l> <Esc>:tabn<CR>
++nnoremap <C-h> <Esc>:tabp<CR>
++nnoremap <C-j> <Esc>:bn!<CR>
++nnoremap <C-k> <Esc>:bp!<CR>
+ 
+ "Plugin setup 
+ let g:clang_library_path='/usr/lib/llvm-18/lib/libclang.so.1'
+-call plug#begin()
+-
+-" List your plugins here
+-Plug 'davidhalter/jedi-vim'
+-Plug 'rip-rip/clang_complete'
+-Plug 'tpope/vim-surround'
+-call plug#end()
++" call plug#begin()
++" 
++" " List your plugins here
++" Plug 'davidhalter/jedi-vim'
++" Plug 'rip-rip/clang_complete'
++" Plug 'tpope/vim-surround'
++" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
++" call plug#end()
+ """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+ " => Helper functions
+ """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

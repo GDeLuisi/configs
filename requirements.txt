@@ -1,0 +1,6 @@
+flake8
+pylint
+pyright
+autoflake
+autopep8
+autoimport
