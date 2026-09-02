@@ -130,8 +130,13 @@ let g:ale_fixers = {
   \}
 nmap <F8> <Plug>(ale_fix)
 let g:ale_completion_enabled = 1
-let g:ale_completion_autoimport = 1
+let g:ale_completion_autoimport = 0
 set omnifunc=ale#completion#OmniFunc
+let b:ale_python_pyright_config = {
+            \'python':{
+            \ 'analysis':{'typeCheckingMode':'off'}
+            \}
+\}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
