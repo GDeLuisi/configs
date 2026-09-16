@@ -12,6 +12,16 @@ else
     cp .vimrc $VIM_PATH
 fi
 
+if [[ ! -f ~/.vim/autoload/plug.vim  ]];then
+    echo "Installing vim plug"
+    if command -v curl &>/dev/null;then
+        curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    else 
+        echo "Curl is not installed, install curl and re-run this configuration script. Skipping vim plug installation"
+    fi
+fi
+
 if command -v python3 &>/dev/null && command -v pip &>/dev/null;then
     echo "Installing python linters dependencies"
     rc=0
