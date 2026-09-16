@@ -36,6 +36,10 @@ if command -v python3 &>/dev/null && command -v pip &>/dev/null;then
             echo "Pyhton linters installation canceled"
         fi
     fi
+else 
+    echo "Python or pip are not configured/installed correctly. Fix it and re-run the configuration script to install the used linters"
+    python3 --version
+    pip --version
 fi
 
 
